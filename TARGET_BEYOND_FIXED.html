@@ -50,14 +50,23 @@ header {
   background: var(--navy);
   color: white;
   padding: 0 32px;
+  padding-top: env(safe-area-inset-top, 0px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: calc(64px + env(safe-area-inset-top, 0px));
   position: sticky;
   top: 0;
   z-index: 200;
   box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+@media (max-width: 600px) {
+  header {
+    padding: env(safe-area-inset-top, 0px) 12px 0;
+    height: calc(52px + env(safe-area-inset-top, 0px));
+  }
+  .hdr-val { font-size: 14px; }
+  .hdr-label { display: none; }
 }
 
 .logo {
@@ -106,10 +115,14 @@ nav {
   padding: 0 24px;
   gap: 0;
   position: sticky;
-  top: 64px;
+  top: calc(64px + env(safe-area-inset-top, 0px));
   z-index: 100;
   box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+nav::-webkit-scrollbar { display: none; }
 .nav-tab {
   padding: 14px 22px;
   font-size: 13px;
@@ -124,9 +137,31 @@ nav {
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .nav-tab:hover { color: var(--text); }
 .nav-tab.active { color: var(--navy); border-bottom-color: var(--orange); }
+
+@media (max-width: 600px) {
+  nav {
+    padding: 0 8px;
+    top: calc(52px + env(safe-area-inset-top, 0px));
+  }
+  .nav-tab {
+    padding: 10px 10px;
+    font-size: 11px;
+    gap: 4px;
+    flex-direction: column;
+    border-bottom: none;
+    border-bottom: 3px solid transparent;
+    min-width: 52px;
+    justify-content: center;
+  }
+  .nav-tab.active { border-bottom-color: var(--orange); }
+  .nav-icon { font-size: 18px; line-height: 1; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0; }
+}
 
 /* ── Main ── */
 #main-content {
@@ -139,6 +174,9 @@ nav {
   box-sizing: border-box;
   min-height: 80vh;
   position: relative;
+}
+@media (max-width: 600px) {
+  #main-content { padding: 16px; }
 }
 
 /* ── Pages ── */
@@ -3084,13 +3122,13 @@ body[data-page="home"] nav {
 </div>
 
 <nav>
-  <button class="nav-tab active" id="nav-home" onclick="showPage('home',this)">🏠 ホーム</button>
-  <button class="nav-tab" id="nav-chapters" onclick="showPage('chapters',this)">📚 チャプター</button>
-  <button class="nav-tab" id="nav-fc" onclick="showPage('fc',this)">📇 フラッシュカード</button>
-  <button class="nav-tab" id="nav-quiz" onclick="showPage('quiz',this)">🎯 4択クイズ</button>
-  <button class="nav-tab" id="nav-spell" onclick="showPage('spell',this)">✍️ スペリング</button>
-  <button class="nav-tab" id="nav-speed" onclick="showPage('speed',this)">⚡ 高速周回</button>
-  <button class="nav-tab" id="nav-stats" onclick="showPage('stats',this)">📊 学習記録</button>
+  <button class="nav-tab active" id="nav-home" onclick="showPage('home',this)"><span class="nav-icon">🏠</span><span class="nav-label">ホーム</span></button>
+  <button class="nav-tab" id="nav-chapters" onclick="showPage('chapters',this)"><span class="nav-icon">📚</span><span class="nav-label">チャプター</span></button>
+  <button class="nav-tab" id="nav-fc" onclick="showPage('fc',this)"><span class="nav-icon">📇</span><span class="nav-label">カード</span></button>
+  <button class="nav-tab" id="nav-quiz" onclick="showPage('quiz',this)"><span class="nav-icon">🎯</span><span class="nav-label">クイズ</span></button>
+  <button class="nav-tab" id="nav-spell" onclick="showPage('spell',this)"><span class="nav-icon">✍️</span><span class="nav-label">スペリング</span></button>
+  <button class="nav-tab" id="nav-speed" onclick="showPage('speed',this)"><span class="nav-icon">⚡</span><span class="nav-label">高速周回</span></button>
+  <button class="nav-tab" id="nav-stats" onclick="showPage('stats',this)"><span class="nav-icon">📊</span><span class="nav-label">学習記録</span></button>
 </nav>
 
 <div id="main-content">
