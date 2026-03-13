@@ -54,7 +54,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: calc(64px + env(safe-area-inset-top, 0px));
+  height: calc(56px + env(safe-area-inset-top, 0px));
   position: sticky;
   top: 0;
   z-index: 200;
@@ -62,11 +62,9 @@ header {
 }
 @media (max-width: 600px) {
   header {
-    padding: env(safe-area-inset-top, 0px) 12px 0;
-    height: calc(52px + env(safe-area-inset-top, 0px));
+    padding: env(safe-area-inset-top, 0px) 16px 0;
+    height: calc(48px + env(safe-area-inset-top, 0px));
   }
-  .hdr-val { font-size: 14px; }
-  .hdr-label { display: none; }
 }
 
 .logo {
@@ -115,7 +113,7 @@ nav {
   padding: 0 24px;
   gap: 0;
   position: sticky;
-  top: calc(64px + env(safe-area-inset-top, 0px));
+  top: calc(56px + env(safe-area-inset-top, 0px));
   z-index: 100;
   box-shadow: 0 1px 8px rgba(0,0,0,0.05);
   overflow-x: auto;
@@ -146,7 +144,7 @@ nav::-webkit-scrollbar { display: none; }
 @media (max-width: 600px) {
   nav {
     padding: 0 4px;
-    top: calc(52px + env(safe-area-inset-top, 0px));
+    top: calc(48px + env(safe-area-inset-top, 0px));
   }
   .nav-tab {
     padding: 8px 10px;
@@ -3089,28 +3087,7 @@ body[data-page="home"] nav {
 
 
 <header>
-  <div class="logo" onclick="showPage('home', document.getElementById('nav-home'))" style="cursor:pointer">TARGET <em>BEYOND</em></div>
-  <div class="hdr-stats">
-    <div class="hdr-stat">
-      <span class="hdr-val" id="h-total">0</span>
-      <span class="hdr-label">学習数</span>
-    </div>
-    <div class="hdr-sep"></div>
-    <div class="hdr-stat">
-      <span class="hdr-val" id="h-learned">0</span>
-      <span class="hdr-label">習得</span>
-    </div>
-    <div class="hdr-sep"></div>
-    <div class="hdr-stat">
-      <span class="hdr-val" id="h-weak">0</span>
-      <span class="hdr-label">苦手</span>
-    </div>
-    <div class="hdr-sep"></div>
-    <div class="hdr-stat">
-      <span class="hdr-val" id="h-streak">0</span>
-      <span class="hdr-label">連続正解</span>
-    </div>
-  </div>
+  <div class="logo" onclick="showPage('home', null)" style="cursor:pointer">TARGET <em>BEYOND</em></div>
 </header>
 
 <!-- ── Level selector ── -->
@@ -3123,7 +3100,6 @@ body[data-page="home"] nav {
 </div>
 
 <nav>
-  <button class="nav-tab active" id="nav-home" onclick="showPage('home',this)"><span class="nav-icon">🏠</span><span class="nav-label">ホーム</span></button>
   <button class="nav-tab" id="nav-chapters" onclick="showPage('chapters',this)"><span class="nav-icon">📚</span><span class="nav-label">チャプター</span></button>
   <button class="nav-tab" id="nav-fc" onclick="showPage('fc',this)"><span class="nav-icon">📇</span><span class="nav-label">カード</span></button>
   <button class="nav-tab" id="nav-quiz" onclick="showPage('quiz',this)"><span class="nav-icon">🎯</span><span class="nav-label">クイズ</span></button>
