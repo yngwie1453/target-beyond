@@ -38,11 +38,25 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body {
+  overflow-x: hidden;
+}
 body {
   background: var(--cream);
   color: var(--text);
   font-family: 'Outfit', sans-serif;
   min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: env(safe-area-inset-bottom);
+  background: var(--cream);
+  z-index: 999;
 }
 
 /* ── Header ── */
@@ -166,7 +180,7 @@ nav::-webkit-scrollbar { display: none; }
 #main-content {
   display: block !important;
   padding: 28px 32px;
-  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
   width: 100%;
   max-width: 900px;
   margin-left: auto;
