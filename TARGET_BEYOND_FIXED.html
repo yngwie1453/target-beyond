@@ -797,23 +797,7 @@ body[data-page="home"] #main-content {
 }
 .modal-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
 
-/* toast */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--navy);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 40px;
-  font-size: 14px;
-  font-weight: 500;
-  z-index: 1000;
-  transition: transform 0.3s ease;
-  pointer-events: none;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
+
 
 /* Mode selector row */
 .mode-row {
@@ -3590,7 +3574,6 @@ body[data-page="home"] nav {
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
 
 <script>
 // ════════════════════════════════
@@ -5675,7 +5658,7 @@ function setLevel(lv) {
   if (active && active.id === 'page-stats') renderStats();
 
   const names = ['すべて','基本単語','中級単語','上級単語'];
-  showToast(`📚 ${names[lv]} に切り替えました`);
+
 }
 
 // ═══════ NAV ═══════
@@ -6773,10 +6756,14 @@ function quizSpeak(slow=false) {
 
 // ═══════ HEADER ═══════
 function updateHeader() {
-  document.getElementById('h-total').textContent = S.learned.size + S.weak.size;
-  document.getElementById('h-learned').textContent = S.learned.size;
-  document.getElementById('h-weak').textContent = S.weak.size;
-  document.getElementById('h-streak').textContent = S.streak;
+  const t = document.getElementById('h-total');
+  const l = document.getElementById('h-learned');
+  const w = document.getElementById('h-weak');
+  const s = document.getElementById('h-streak');
+  if (t) t.textContent = S.learned.size + S.weak.size;
+  if (l) l.textContent = S.learned.size;
+  if (w) w.textContent = S.weak.size;
+  if (s) s.textContent = S.streak;
 }
 
 // ═══════ FLASHCARD ═══════
@@ -6885,17 +6872,15 @@ function fcRate(rating) {
     updateLS(currentWord.w, 'ok');
     const lv = getLSEntry(currentWord.w).memoryLevel;
     const next = getLSEntry(currentWord.w).nextReviewDate;
-    showToast(`😊 覚えた！次回復習: ${next}（${INTERVALS_OK[lv]}日後）`);
   } else if (rating === 'vague') {
     updateLS(currentWord.w, 'vague');
     const next = getLSEntry(currentWord.w).nextReviewDate;
-    showToast(`🤔 あいまい。次回復習: ${next}`);
   } else {
     S.weak.add(currentWord.w);
     S.learned.delete(currentWord.w);
     S.streak = 0;
     updateLS(currentWord.w, 'no');
-    showToast('😓 わからない。今日また復習しましょう');
+
   }
 
   S.totalAnswered++;
@@ -7271,12 +7256,7 @@ function clearWeak() {
 }
 
 // ═══════ TOAST ═══════
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
+
 
 // ═══════ AI WORD GENERATOR ═══════
 
