@@ -5773,13 +5773,13 @@ function syncWeakFromLS() {
     const id = w.w;
     const e  = S.learningState[id];
     if (!e) continue;
-    if (isAutoWeak(id)) {
+    // isWeak フラグが true（手動「わからない」 or 自動判定）なら苦手に追加
+    if (e.isWeak || isAutoWeak(id)) {
       S.weak.add(id);
       e.isWeak = true;
-    } else if (S.weak.has(id) && e.isWeak) {
-      // 自動で追加したものだけ自動解除（手動追加は残す）
+    } else if (S.weak.has(id) && !e.isWeak) {
+      // isWeakフラグが解除されたものだけS.weakから除去
       S.weak.delete(id);
-      e.isWeak = false;
     }
   }
 }
