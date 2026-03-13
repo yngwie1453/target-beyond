@@ -3211,18 +3211,8 @@ body[data-page="home"] nav {
         <div class="sec-title">チャプター一覧</div>
         <div class="sec-sub" id="ch-summary">全48チャプター・1,809語</div>
       </div>
-      <button class="ch-filter-btn" onclick="toggleLevelBar()">🔽 レベル絞込</button>
     </div>
-    <div class="ch-range-bar">
-      <span class="ch-range-label">📏 範囲指定学習</span>
-      <div class="ch-range-controls">
-        <select id="ch-range-from" class="ch-select" onchange="updateRangePreview()"></select>
-        <span class="ch-range-sep">〜</span>
-        <select id="ch-range-to" class="ch-select" onchange="updateRangePreview()"></select>
-        <span id="ch-range-preview" class="ch-range-preview"></span>
-        <button class="ch-range-go-btn" onclick="startRangeStudy()">この範囲で学習 →</button>
-      </div>
-    </div>
+
   </div>
   <div class="ch-grid" id="ch-grid">
     <!-- JS で生成 -->
@@ -3294,10 +3284,7 @@ body[data-page="home"] nav {
           <div class="card-word" id="fc-word">—</div>
           <div class="card-phonetic" id="fc-phon"></div>
           <div class="card-tip">タップして答えを確認</div>
-          <div class="sound-wrap">
-            <button class="sound-btn" onclick="speak(event,false)" title="通常速度">🔊 普通</button>
-            <button class="sound-btn" onclick="speak(event,true)" title="ゆっくり">🐢 ゆっくり</button>
-          </div>
+
         </div>
         <div class="card-face back">
           <div class="card-deco"></div>
@@ -3306,10 +3293,7 @@ body[data-page="home"] nav {
           <div class="card-meaning" id="fc-mean"></div>
           <div class="card-meaning2" id="fc-mean2"></div>
           <div class="card-example" id="fc-ex"></div>
-          <div class="sound-wrap">
-            <button class="sound-btn" onclick="speak(event,false)">🔊 普通</button>
-            <button class="sound-btn" onclick="speak(event,true)">🐢 ゆっくり</button>
-          </div>
+
         </div>
       </div>
     </div>
