@@ -3253,8 +3253,7 @@ body[data-page="home"] nav {
       <button class="restart-btn weak-btn" onclick="fcRestartWeak()">🔴 苦手のみ</button>
     </div>
   </div>
-  <div class="sec-title">フラッシュカード</div>
-  <div class="sec-sub">カードをタップして意味を確認。覚えたか判定してください。</div>
+
 
   <div class="fc-wrap">
     <div class="prog-row">
@@ -3345,8 +3344,7 @@ body[data-page="home"] nav {
       <button class="restart-btn weak-btn" onclick="quizRestartWeak()">🔴 苦手のみ</button>
     </div>
   </div>
-  <div class="sec-title">4択クイズ</div>
-  <div class="sec-sub">正しい日本語訳を選んでください。苦手単語を優先的に出題します。</div>
+
 
   <div class="quiz-wrap">
     <div class="prog-row">
@@ -3354,10 +3352,7 @@ body[data-page="home"] nav {
       <span class="prog-label" id="q-cnt">1 / 20</span>
     </div>
     <div class="quiz-q-card">
-      <div style="position:absolute;top:16px;right:14px;display:flex;gap:6px;z-index:10">
-        <button class="sound-btn" onclick="quizSpeak(false)" style="position:static">🔊 普通</button>
-        <button class="sound-btn" onclick="quizSpeak(true)" style="position:static">🐢 ゆっくり</button>
-      </div>
+
       <div class="quiz-word" id="q-word"></div>
       <div class="quiz-phonetic" id="q-phon"></div>
     </div>
@@ -3385,8 +3380,7 @@ body[data-page="home"] nav {
       <button class="restart-btn weak-btn" onclick="spellRestartWeak()">🔴 苦手のみ</button>
     </div>
   </div>
-  <div class="sec-title">スペリング入力</div>
-  <div class="sec-sub">日本語の意味を見て英単語を入力してください。</div>
+
 
   <div class="spell-wrap">
     <div class="prog-row">
@@ -3397,7 +3391,7 @@ body[data-page="home"] nav {
       <div class="card-deco" style="background:linear-gradient(90deg,var(--orange),var(--gold))"></div>
       <div class="spell-pos" id="sp-pos"></div>
       <div class="spell-meaning" id="sp-mean"></div>
-      <div class="spell-hint" id="sp-hint"></div>
+      <div class="spell-hint" id="sp-hint" style="display:none"></div>
     </div>
     <div class="spell-input-wrap">
       <input type="text" class="spell-input" id="sp-input" placeholder="英単語を入力…" autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="spellKey(event)">
@@ -3418,8 +3412,7 @@ body[data-page="home"] nav {
 
   <!-- セットアップ画面 -->
   <div id="sp2-setup">
-    <div class="sec-title">⚡ 高速周回</div>
-    <div class="sec-sub">自動で次の単語に進みます。隙間時間に大量に確認しましょう。</div>
+
 
     <div class="sp2-setup-card">
       <!-- スコープ選択 -->
@@ -7105,7 +7098,7 @@ function renderSpell() {
   const w = S.spSet[S.spIndex];
   document.getElementById('sp-pos').textContent = w.pos + '詞';
   document.getElementById('sp-mean').textContent = w.m;
-  document.getElementById('sp-hint').textContent = w.ex;
+  document.getElementById('sp-hint').textContent = '';  // 例文非表示
   document.getElementById('sp-cnt').textContent = `${S.spIndex+1} / ${S.spSet.length}`;
   document.getElementById('sp-prog').style.width = `${(S.spIndex/S.spSet.length)*100}%`;
 
