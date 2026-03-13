@@ -6196,28 +6196,13 @@ function renderChapters() {
 
   const numCh = getNumChapters();
 
-  // range selects を初期化（確実にDOMが存在する場合のみ）
-  const selFrom = document.getElementById('ch-range-from');
-  const selTo   = document.getElementById('ch-range-to');
-  if (selFrom && selTo) {
-    selFrom.innerHTML = '';
-    selTo.innerHTML   = '';
-    for (let c = 1; c <= numCh; c++) {
-      const o1 = new Option(`Ch.${c}`, c, false, c === S.rangeStart);
-      const o2 = new Option(`Ch.${c}`, c, false, c === S.rangeEnd);
-      selFrom.appendChild(o1);
-      selTo.appendChild(o2);
-    }
-    // 初期プレビュー更新
-    updateRangePreview();
-  }
+  // range selects は削除済み
 
   // summary
   const totalLearned = S.learned.size;
   const sumEl = document.getElementById('ch-summary');
   if (sumEl) sumEl.textContent = `全${numCh}チャプター・${WORDS.length.toLocaleString()}語 ／ 学習済み ${totalLearned}語`;
-  // 範囲プレビュー初期更新
-  updateRangePreview();
+
 
   // filter by level if active
   const activeLv = S.levelFilter;
@@ -6300,17 +6285,7 @@ function startChapterStudy(mode) {
 // 範囲指定学習
 // ─────────────────────────────────────────
 function updateRangePreview() {
-  const from = parseInt(document.getElementById('ch-range-from').value);
-  const to   = parseInt(document.getElementById('ch-range-to').value);
-  S.rangeStart = Math.min(from, to);
-  S.rangeEnd   = Math.max(from, to);
-  document.getElementById('ch-range-from').value = S.rangeStart;
-  document.getElementById('ch-range-to').value   = S.rangeEnd;
-  // 語数プレビュー
-  const words = WORDS.filter(w => w.ch >= S.rangeStart && w.ch <= S.rangeEnd);
-  const lvFilter = S.levelFilter !== 0 ? words.filter(w => w.lv === S.levelFilter) : words;
-  const prev = document.getElementById('ch-range-preview');
-  if (prev) prev.textContent = `${lvFilter.length}語`;
+  // range UIは削除済み - 何もしない
 }
 
 function startRangeStudy() {
