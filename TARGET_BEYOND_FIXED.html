@@ -336,6 +336,54 @@ body[data-page="home"] #main-content {
   color: var(--navy);
   text-align: center;
   line-height: 1;
+  cursor: pointer;
+}
+.tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--navy);
+}
+.tts-btn:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+.tts-btn:active { transform: scale(0.94); }
+.tts-btn-disabled,
+.tts-btn[disabled] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════
+ * 音声機能：UI上から一時撤去（2026-06-30）
+ * 理由：現状のmp3未配置・音質面で教材としての信頼感を損なうため、
+ *       いったん音声ボタンを非表示にし、暗記アプリとしての完成度を優先する。
+ * 方針：
+ *   - 関連JS（speakWord / getWordAudioUrl / wordToAudioFileName 等）は
+ *     削除せず温存。mp3ファイルを audio/words/ に用意できた段階で
+ *     下記の「display: none !important」ルールを削除すればそのまま再導入できる。
+ *   - SpeechSynthesis APIには戻さない方針のため、JS側はmp3再生方式のまま維持する。
+ * 再導入時の手順：
+ *   1. audio/words/ 配下に各単語のmp3を配置
+ *   2. このブロック（.tts-btn { display: none !important; }）を削除
+ *   3. 動作確認のうえデプロイ
+ * ═══════════════════════════════════════════ */
+.tts-btn {
+  display: none !important;
+}
+
+.wl-tts-btn {
+  margin: 0;
+  width: 26px;
+  height: 26px;
+  font-size: 13px;
+  flex: 0 0 auto;
 }
 .card-phonetic {
   font-family: 'JetBrains Mono', monospace;
@@ -482,6 +530,7 @@ body[data-page="home"] #main-content {
   color: var(--navy);
   letter-spacing: -1px;
   line-height: 1;
+  cursor: pointer;
 }
 .quiz-phonetic {
   font-family: 'JetBrains Mono', monospace;
@@ -1438,6 +1487,120 @@ body[data-page="home"] nav {
 .lv-bar-2 { background: #16a34a; }
 .lv-bar-3 { background: #dc2626; }
 .lv-bar-mix { background: linear-gradient(90deg, #2563eb 33%, #16a34a 66%, #dc2626 100%); }
+
+/* ── 単語リスト（索引） ── */
+.wl-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+.wl-search-input {
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--navy);
+}
+.wl-search-input:focus { outline: none; border-color: var(--orange); }
+.wl-chapter-select {
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--navy);
+  cursor: pointer;
+}
+.wl-csv-btn {
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.wl-csv-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+.wl-count {
+  padding: 0 16px 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.wl-list {
+  margin: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wl-entry {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.wl-entry-no {
+  flex: 0 0 auto;
+  width: 34px;
+  padding-top: 3px;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+}
+.wl-entry-body { flex: 1 1 auto; min-width: 0; }
+.wl-entry-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.wl-entry-word {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: 0.2px;
+}
+.wl-entry-pos {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange2);
+  background: #fff3ea;
+  border: 1px solid #ffd9bd;
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.wl-entry-ch {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.wl-entry-meanings {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.wl-entry-meanings li { margin: 0; }
+.wl-empty {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
 
 /* ── Chapter Modal ── */
 .ch-modal-backdrop {
@@ -3104,6 +3267,7 @@ body[data-page="home"] nav {
   <button class="nav-tab" id="nav-quiz" onclick="showPage('quiz',this)"><span class="nav-icon">🎯</span><span class="nav-label">クイズ</span></button>
   <button class="nav-tab" id="nav-spell" onclick="showPage('spell',this)"><span class="nav-icon">✍️</span><span class="nav-label">スペリング</span></button>
   <button class="nav-tab" id="nav-speed" onclick="showPage('speed',this)"><span class="nav-icon">⚡</span><span class="nav-label">高速周回</span></button>
+  <button class="nav-tab" id="nav-wordlist" onclick="showPage('wordlist',this)"><span class="nav-icon">📖</span><span class="nav-label">単語リスト</span></button>
   <button class="nav-tab" id="nav-stats" onclick="showPage('stats',this)"><span class="nav-icon">📊</span><span class="nav-label">学習記録</span></button>
 </nav>
 
@@ -3218,6 +3382,37 @@ body[data-page="home"] nav {
   </div>
 </div>
 
+<!-- ══ 単語リスト（索引・収録語一覧） ══ -->
+<div class="page" id="page-wordlist">
+  <div class="ch-header">
+    <div class="ch-header-top">
+      <div>
+        <div class="sec-title">単語リスト</div>
+        <div class="sec-sub" id="wl-summary">収録英単語 —語　収録意味 —件</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wl-toolbar">
+    <input type="text" id="wl-search" class="wl-search-input" placeholder="英単語・意味で検索" oninput="wlRender()">
+    <select id="wl-chapter-sel" class="wl-chapter-select" onchange="wlRender()">
+      <option value="0">すべてのChapter</option>
+    </select>
+    <select id="wl-sort-sel" class="wl-chapter-select" onchange="wlRender()">
+      <option value="order">掲載順</option>
+      <option value="abc">ABC順</option>
+    </select>
+    <button class="wl-csv-btn" onclick="wlDownloadCsv()">⬇ CSV</button>
+  </div>
+
+  <div class="wl-count" id="wl-count">—語中 —語を表示</div>
+
+  <div class="wl-list" id="wl-list">
+    <!-- JS で生成 -->
+  </div>
+  <div class="wl-empty" id="wl-empty" style="display:none">該当する単語が見つかりませんでした</div>
+</div>
+
 <!-- ── Chapter Action Modal ── -->
 <div class="ch-modal-backdrop" id="ch-modal-backdrop" onclick="closeChdModal()" style="display:none">
   <div class="ch-modal" onclick="event.stopPropagation()">
@@ -3279,7 +3474,8 @@ body[data-page="home"] nav {
           <div class="card-deco"></div>
           <span class="card-tag">英語 → 日本語</span>
           <div class="card-badge-wrap" id="fc-badges"></div>
-          <div class="card-word" id="fc-word">—</div>
+          <div class="card-word" id="fc-word" onclick="speak(event)">—</div>
+          <button type="button" id="fc-tts-btn" class="tts-btn" onclick="speak(event)" aria-label="発音を聞く">🔊</button>
           <div class="card-phonetic" id="fc-phon"></div>
           <div class="card-tip">タップして答えを確認</div>
 
@@ -3352,7 +3548,8 @@ body[data-page="home"] nav {
     </div>
     <div class="quiz-q-card">
 
-      <div class="quiz-word" id="q-word"></div>
+      <div class="quiz-word" id="q-word" onclick="quizSpeak()"></div>
+      <button type="button" id="q-tts-btn" class="tts-btn" onclick="quizSpeak()" aria-label="発音を聞く">🔊</button>
       <div class="quiz-phonetic" id="q-phon"></div>
     </div>
     <div class="quiz-options" id="q-opts"></div>
@@ -5618,28 +5815,45 @@ function load() {
 }
 
 // ═══════ LEVEL FILTER ═══════
+/**
+ * 全画面共通の単語取得ロジック。
+ * 方針：
+ *   - Chapter/range スコープでは getChapterWords() のみを正とし、
+ *     levelFilter（基本/中級/上級の絞り込み）は一切適用しない。
+ *     「Chapterを選んだら、そのChapterの単語は全て対象」を保証する。
+ *   - levelFilter は all/weak/new など「Chapterに紐付かない」スコープでのみ
+ *     補助フィルタとして働く。
+ */
 function getBase() {
-  // level filter (補助フィルタ)
-  const byLevel = S.levelFilter === 0 ? WORDS : WORDS.filter(w => w.lv === S.levelFilter);
-
   // scope filter (主フィルタ)
   switch (S.fcScope) {
     case 'chapter':
-      return byLevel.filter(w => w.ch === S.currentChapter)
-                    .sort((a,b) => a.oi - b.oi);
-    case 'range':
-      return byLevel.filter(w => w.ch >= S.rangeStart && w.ch <= S.rangeEnd)
-                    .sort((a,b) => a.ch !== b.ch ? a.ch - b.ch : a.oi - b.oi);
-    case 'weak':
+      // Chapter学習は常に getChapterWords() を正とする（levelFilter 無視）
+      return getChapterWords(S.currentChapter);
+    case 'range': {
+      // 複数Chapterにまたがる範囲指定も getChapterWords() を積み上げて作る
+      const out = [];
+      for (let ch = S.rangeStart; ch <= S.rangeEnd; ch++) {
+        out.push(...getChapterWords(ch));
+      }
+      return out;
+    }
+    case 'weak': {
+      const byLevel = S.levelFilter === 0 ? WORDS : WORDS.filter(w => w.lv === S.levelFilter);
       return byLevel.filter(w => S.weak.has(w.w));
-    case 'new':
+    }
+    case 'new': {
+      const byLevel = S.levelFilter === 0 ? WORDS : WORDS.filter(w => w.lv === S.levelFilter);
       return byLevel.filter(w => !S.learned.has(w.w) && !S.weak.has(w.w));
+    }
     case 'review':
       // startTodayReview で S.fcDeck を直接セット済みなのでそのまま返す
       return S.fcDeck.length ? S.fcDeck : getTodayReviewWords();
     case 'all':
-    default:
+    default: {
+      const byLevel = S.levelFilter === 0 ? WORDS : WORDS.filter(w => w.lv === S.levelFilter);
       return byLevel;
+    }
   }
 }
 
@@ -6194,14 +6408,10 @@ function renderChapters() {
   const sumEl = document.getElementById('ch-summary');
   if (sumEl) sumEl.textContent = `全${numCh}チャプター・${WORDS.length.toLocaleString()}語 ／ 学習済み ${totalLearned}語`;
 
-
-  // filter by level if active
-  const activeLv = S.levelFilter;
-
   grid.innerHTML = '';
   for (let ch = 1; ch <= numCh; ch++) {
-    let words = getChapterWords(ch);
-    if (activeLv !== 0) words = words.filter(w => w.lv === activeLv);
+    // Chapterの総単語数は常に getChapterWords() の実データ件数（フィルタなし）を正とする
+    const words = getChapterWords(ch);
     if (!words.length) continue;
 
     const done = words.filter(w => S.learned.has(w.w) || S.weak.has(w.w)).length;
@@ -6231,6 +6441,204 @@ function renderChapters() {
 // Chapter Modal
 // ─────────────────────────────────────────
 let _modalChapter = 1;
+
+// ═══════════════════════════════════════════
+// 単語リスト（索引・収録語一覧）
+// 方針：
+//   - データ元は WORDS のみ（学習進捗 S には一切触れない・書き込まない）
+//   - 同じ英単語（w.w）は1エントリにまとめ、意味は重複を除いて箇条書きにする
+//   - デフォルトの表示順は掲載順（ch→oi）。ABC順への切替も可能
+//   - 検索・Chapter絞り込みは「表示対象」を絞るだけで、上部の総数表示には影響させない
+//   - 上部には「収録英単語（ユニーク数）」と「収録意味（レコード数）」を区別して表示する
+// ═══════════════════════════════════════════
+
+/** WORDSを英単語キーでグループ化した辞書エントリ配列（キャッシュ） */
+let _wlEntries = null;
+function wlBuildEntries() {
+  if (_wlEntries) return _wlEntries;
+
+  const byWord = new Map(); // word -> { w, pos, ch, oi, meanings:Set, recordCount }
+  for (const rec of WORDS) {
+    let entry = byWord.get(rec.w);
+    if (!entry) {
+      entry = {
+        w: rec.w,
+        pos: rec.pos,           // 代表品詞（最初に出現したレコードのもの）
+        ch: rec.ch,             // 同一単語は常に同一Chapterに属する前提（getChapterWords側と整合）
+        oi: rec.oi,
+        meanings: [],           // 重複除去済みの意味リスト（表示順を保つため配列＋Setの併用）
+        _meaningSet: new Set(),
+        recordCount: 0,
+      };
+      byWord.set(rec.w, entry);
+    }
+    entry.recordCount++;
+    // m・m2 をそれぞれ意味候補として追加し、重複（同一文字列）は除外する
+    for (const cand of [rec.m, rec.m2]) {
+      if (!cand) continue;
+      if (!entry._meaningSet.has(cand)) {
+        entry._meaningSet.add(cand);
+        entry.meanings.push(cand);
+      }
+    }
+  }
+
+  _wlEntries = [...byWord.values()].map(e => {
+    delete e._meaningSet;
+    return e;
+  }).sort((a, b) => (a.ch - b.ch) || (a.oi - b.oi));
+
+  return _wlEntries;
+}
+
+/** Chapterセレクトを初回のみ動的生成 */
+function wlInitChapterSelect() {
+  const sel = document.getElementById('wl-chapter-sel');
+  if (!sel || sel.dataset.filled === '1') return;
+  const n = getNumChapters();
+  for (let i = 1; i <= n; i++) {
+    const total = getChapterWords(i).length;
+    if (!total) continue;
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `Chapter ${i}（${total}語）`;
+    sel.appendChild(opt);
+  }
+  sel.dataset.filled = '1';
+}
+
+const POS_LABEL = { '動':'動詞', '名':'名詞', '形':'形容詞', '副':'副詞', '前':'前置詞', '接':'接続詞' };
+
+/** 単語リスト本体の描画。検索・Chapter絞り込み・並び替えを表示対象にのみ適用する */
+function wlRender() {
+  wlInitChapterSelect();
+
+  const entries = wlBuildEntries();
+
+  // 上部サマリー：ユニーク単語数（語）と総レコード数（意味の出典件数）を区別して表示
+  const totalUniqueWords = entries.length;
+  const totalRecords = WORDS.length;
+  const summaryEl = document.getElementById('wl-summary');
+  if (summaryEl) {
+    summaryEl.textContent =
+      `収録英単語　${totalUniqueWords.toLocaleString()}語　／　収録意味　${totalRecords.toLocaleString()}件`;
+  }
+
+  const kw = (document.getElementById('wl-search')?.value || '').trim().toLowerCase();
+  const chSel = parseInt(document.getElementById('wl-chapter-sel')?.value || '0');
+  const sortMode = document.getElementById('wl-sort-sel')?.value || 'order';
+
+  let filtered = entries;
+  if (chSel !== 0) filtered = filtered.filter(e => e.ch === chSel);
+  if (kw) {
+    filtered = filtered.filter(e =>
+      e.w.toLowerCase().includes(kw) ||
+      e.meanings.some(m => m.toLowerCase().includes(kw))
+    );
+  }
+
+  if (sortMode === 'abc') {
+    filtered = [...filtered].sort((a, b) => a.w.localeCompare(b.w));
+  }
+  // sortMode === 'order' の場合は wlBuildEntries() が既に ch→oi 順なのでそのまま
+
+  const countEl = document.getElementById('wl-count');
+  if (countEl) {
+    countEl.textContent = `${totalUniqueWords.toLocaleString()}語中 ${filtered.length.toLocaleString()}語を表示`;
+  }
+
+  const listEl = document.getElementById('wl-list');
+  const emptyEl = document.getElementById('wl-empty');
+  if (!listEl) return;
+
+  if (!filtered.length) {
+    listEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  const html = filtered.map((e, i) => {
+    const meaningsHtml = e.meanings.map(m => `<li>${wlEscapeHtml(m)}</li>`).join('');
+    const wordKey = e.w.toLowerCase();
+    const isMissing = _missingAudioWords.has(wordKey);
+    return `
+      <div class="wl-entry">
+        <div class="wl-entry-no">${i + 1}</div>
+        <div class="wl-entry-body">
+          <div class="wl-entry-head">
+            <span class="wl-entry-word">${wlEscapeHtml(e.w)}</span>
+            <button type="button" class="tts-btn wl-tts-btn${isMissing ? ' tts-btn-disabled' : ''}" data-word="${wlEscapeHtml(wordKey)}" ${isMissing ? 'disabled' : ''} onclick="speakWord('${wlEscapeAttrJs(e.w)}')" aria-label="発音を聞く">🔊</button>
+            <span class="wl-entry-pos">${wlEscapeHtml(POS_LABEL[e.pos] || e.pos)}</span>
+            <span class="wl-entry-ch">Chapter ${e.ch}</span>
+          </div>
+          <ul class="wl-entry-meanings">${meaningsHtml}</ul>
+        </div>
+      </div>
+    `;
+  }).join('');
+  listEl.innerHTML = html;
+}
+
+/** onclick属性内に安全に埋め込むための簡易エスケープ（シングルクォート・バックスラッシュ対策） */
+function wlEscapeAttrJs(s) {
+  return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function wlEscapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/** 現在の絞り込み・並び替え状態を反映したCSVをダウンロード（1単語1行、意味は ; 区切り） */
+function wlDownloadCsv() {
+  const entries = wlBuildEntries();
+  const kw = (document.getElementById('wl-search')?.value || '').trim().toLowerCase();
+  const chSel = parseInt(document.getElementById('wl-chapter-sel')?.value || '0');
+  const sortMode = document.getElementById('wl-sort-sel')?.value || 'order';
+
+  let filtered = entries;
+  if (chSel !== 0) filtered = filtered.filter(e => e.ch === chSel);
+  if (kw) {
+    filtered = filtered.filter(e =>
+      e.w.toLowerCase().includes(kw) ||
+      e.meanings.some(m => m.toLowerCase().includes(kw))
+    );
+  }
+  if (sortMode === 'abc') {
+    filtered = [...filtered].sort((a, b) => a.w.localeCompare(b.w));
+  }
+
+  const esc = (v) => {
+    const s = String(v ?? '');
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+
+  const header = ['No', '英単語', '品詞', '日本語意味', 'Chapter'];
+  const lines = [header.join(',')];
+  filtered.forEach((e, i) => {
+    lines.push([
+      i + 1,
+      esc(e.w),
+      esc(POS_LABEL[e.pos] || e.pos),
+      esc(e.meanings.join('; ')),
+      'Chapter ' + e.ch,
+    ].join(','));
+  });
+
+  const csv = '\uFEFF' + lines.join('\n'); // BOM付きでExcelでも文字化けしないようにする
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = chSel !== 0 ? `target_beyond_words_ch${chSel}.csv` : 'target_beyond_words_all.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 function openChapterModal(ch) {
   _modalChapter = ch;
@@ -6421,6 +6829,7 @@ function showPage(id, el) {
   if (id === 'stats')    renderStats();
   if (id === 'home')     updateHomeStats();
   if (id === 'chapters') renderChapters();
+  if (id === 'wordlist') wlRender();
   if (id === 'fc')       { updateFcScopeUI(); S.fcDeck = getFcDeck(); updateRestartBanners(); fcRender(); }
   if (id === 'speed')    {
     clearTimeout(SP2.timer);
@@ -6433,6 +6842,7 @@ function showPage(id, el) {
 
   updateRestartBanners();
   document.body.setAttribute('data-page', id);
+  updateSpeechAvailabilityUI();
 
   // ホームではnav・level-barを非表示
   const navEl = document.querySelector('nav');
@@ -6591,168 +7001,156 @@ function spellRestartWeak() {
 
 
 // ═══════ SPEAK — Merriam-Webster native audio + TTS fallback ═══════
-// MW audio URL pattern: https://media.merriam-webster.com/audio/prons/en/us/mp3/{subdir}/{file}.mp3
-// subdir rule: starts with "bix" → "bix", starts with "gg" → "gg",
-//              starts with number/punct → "number", else first letter
+// ═══════════════════════════════════════════
+// 音声再生（mp3音声ファイル方式）
+// 方針：
+//   - ブラウザのSpeechSynthesis API（音声合成）は使用しない。
+//     大学受験用教材として十分な品質を担保するため、各単語ごとに
+//     用意した高品質な収録mp3ファイルを再生する方式に統一する。
+//   - 音声ファイルは /audio/words/{word}.mp3 に配置する想定。
+//     ファイル名は英単語を小文字化し、英数字とハイフン以外の文字
+//     （アポストロフィ等）を除去、スペースはハイフンに変換して作る。
+//       例: "abandon"  -> /audio/words/abandon.mp3
+//           "take off" -> /audio/words/take-off.mp3
+//   - 連打時に音が重ならないよう、再生中のAudioがあれば必ず停止してから
+//     次のAudioを生成・再生する。
+//   - 音声ファイルが存在しない単語では、再生ボタンを disabled にする
+//     （クリックしても何も起きない・見た目でも判別できるようにする）。
+// ═══════════════════════════════════════════
 
-const _audioCache = {};
+// このサイトは Next.js ではなく GitHub Pages 上の静的サイトとして配信されている
+// （https://yngwie1453.github.io/target-beyond/ 配下）。
+// 絶対パス '/audio/words/...' だとリポジトリ名のサブパスが欠落して404になるため、
+// 必ず相対パスで参照する。音声ファイルはリポジトリ直下の audio/words/ に配置する
+// （Next.jsでいう /public/audio/words/ に相当する置き場所）。
+const AUDIO_BASE_PATH = 'audio/words/';
 
-function getMWSubdir(file) {
-  if (file.startsWith('bix')) return 'bix';
-  if (file.startsWith('gg'))  return 'gg';
-  if (/^[0-9_]/.test(file))  return 'number';
-  return file[0];
+/** 英単語 → mp3ファイル名（拡張子なし）に変換する。
+ *  小文字化し、英数字・スペース・ハイフン以外の文字（アポストロフィ等）を除去。
+ *  スペースはハイフンに変換する。 */
+function wordToAudioFileName(word) {
+  return String(word)
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '') // 記号（'等）を除去
+    .replace(/\s+/g, '-');        // スペース → ハイフン
 }
 
-function getMWUrl(word) {
-  // MW uses lowercase, strips special chars for filename
-  const file = word.toLowerCase().replace(/[^a-z0-9]/g, '');
-  const subdir = getMWSubdir(file);
-  return `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${file}.mp3`;
+function getWordAudioUrl(word) {
+  return AUDIO_BASE_PATH + wordToAudioFileName(word) + '.mp3';
 }
-
-// Each word can also have a custom MW audio file key (for irregular filenames)
-const MW_OVERRIDES = {
-  'adequate':    'adequa01',
-  'authentic':   'authen04',
-  'catastrophe': 'catast02',
-  'cognitive':   'cognit02',
-  'coherent':    'cohere02',
-  'conceive':    'concei02',
-  'controversy': 'contro08',
-  'controversial':'contr08',
-  'cynical':     'cynica01',
-  'dedicate':    'dedica02',
-  'deliberate':  'delibe04',
-  'democracy':   'democr03',
-  'empirical':   'empiri01',
-  'equivalent':  'equiva01',
-  'ethical':     'ethica01',
-  'excessive':   'excess01',
-  'facilitate':  'facili02',
-  'fluctuate':   'fluctu01',
-  'fragile':     'fragil01',
-  'fundamental': 'fundam01',
-  'hierarchy':   'hierac01',
-  'hypothesis':  'hypoth01',
-  'illuminate':  'illumi02',
-  'inevitable':  'inevit01',
-  'innovative':  'innova01',
-  'integrate':   'integr02',
-  'integrity':   'integr04',
-  'interpret':   'interp04',
-  'intervene':   'interv06',
-  'legislature': 'legisl02',
-  'manipulation':'manipu01',
-  'mechanism':   'mechan02',
-  'negotiate':   'negoti02',
-  'objective':   'object04',
-  'obstacle':    'obstac01',
-  'perceive':    'percei02',
-  'persistent':  'persis03',
-  'phenomenon':  'phenom01',
-  'potential':   'potent04',
-  'prominent':   'promin02',
-  'proportion':  'propor02',
-  'reluctant':   'reluct02',
-  'stimulate':   'stimul02',
-  'subsequent':  'subseq01',
-  'substantial': 'substa04',
-  'sustainable': 'sustai02',
-  'tolerance':   'tolera02',
-  'transform':   'transf05',
-  'ultimate':    'ultima02',
-  'undermine':   'underm02',
-  'universal':   'univer04',
-  'utilize':     'utiliz01',
-  'vulnerable':  'vulner01',
-};
 
 let _currentAudio = null;
 
-async function speakWord(word, slow = false) {
-  // Stop any playing audio
+/**
+ * 英単語の音声を再生する（単語面・クイズ画面・単語リスト 共通）。
+ * 連打対策：再生中の音声があれば必ず停止してから次を再生する。
+ */
+function speakWord(word) {
+  if (!word) return;
+
+  // 連打対策：現在再生中のAudioがあれば停止してから次を再生する
   if (_currentAudio) {
-    _currentAudio.pause();
-    _currentAudio.currentTime = 0;
+    try {
+      _currentAudio.pause();
+      _currentAudio.currentTime = 0;
+    } catch (e) { /* noop */ }
     _currentAudio = null;
   }
 
-  const key = word.toLowerCase();
+  const url = getWordAudioUrl(word);
+  const audio = new Audio(url);
+  _currentAudio = audio;
 
-  // Build MW URL
-  const fileBase = MW_OVERRIDES[key] || key.replace(/[^a-z0-9]/g, '');
-  const subdir   = getMWSubdir(fileBase);
-  const url       = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdir}/${fileBase}.mp3`;
+  audio.addEventListener('error', () => {
+    // 音声ファイルが存在しない／読み込みに失敗した場合は、
+    // 該当単語に紐づくボタンを以後disabledにしておく（同一セッション中の再判定コストを下げる）
+    const mediaError = audio.error;
+    console.warn(
+      '[speakWord] 音声の読み込みに失敗しました',
+      '\n  単語:', word,
+      '\n  URL:', url,
+      '\n  エラー:', mediaError ? `code=${mediaError.code} (${_mediaErrorCodeLabel(mediaError.code)})` : 'unknown'
+    );
+    _markWordAudioMissing(word);
+    if (_currentAudio === audio) _currentAudio = null;
+  });
 
-  try {
-    const audio = new Audio(url);
-    audio.playbackRate = slow ? 0.75 : 1.0;
-    _currentAudio = audio;
+  audio.play().catch((err) => {
+    // 自動再生制限やファイル不在などで再生できなかった場合も同様に扱う
+    console.warn(
+      '[speakWord] 音声の再生に失敗しました',
+      '\n  単語:', word,
+      '\n  URL:', url,
+      '\n  エラー:', err && err.message ? err.message : err
+    );
+    _markWordAudioMissing(word);
+    if (_currentAudio === audio) _currentAudio = null;
+  });
+}
 
-    await new Promise((resolve, reject) => {
-      audio.oncanplaythrough = () => resolve();
-      audio.onerror = () => reject();
-      audio.load();
-      // timeout fallback
-      setTimeout(() => reject(new Error('timeout')), 3000);
-    });
-
-    await audio.play();
-    return;
-  } catch (e) {
-    // Fallback to Web Speech API
-    _ttsSpeak(word, slow);
+/** MediaError.code を人が読める文字列に変換する（デバッグ表示用） */
+function _mediaErrorCodeLabel(code) {
+  switch (code) {
+    case 1: return 'MEDIA_ERR_ABORTED';
+    case 2: return 'MEDIA_ERR_NETWORK';
+    case 3: return 'MEDIA_ERR_DECODE';
+    case 4: return 'MEDIA_ERR_SRC_NOT_SUPPORTED（多くの場合：ファイルが存在しない/404）';
+    default: return 'unknown';
   }
 }
 
-// ── Web Speech fallback ──
-let _bestVoice = null;
-function _getBestVoice() {
-  if (_bestVoice) return _bestVoice;
-  const voices = speechSynthesis.getVoices();
-  if (!voices.length) return null;
-  const score = v => {
-    if (!v.lang.startsWith('en')) return -1;
-    const n = v.name.toLowerCase();
-    let s = v.lang === 'en-US' ? 10 : v.lang === 'en-GB' ? 8 : 5;
-    if (n.includes('neural'))    s += 40;
-    if (n.includes('natural'))   s += 35;
-    if (n.includes('enhanced'))  s += 30;
-    if (n.includes('premium'))   s += 30;
-    if (n.includes('google'))    s += 25;
-    if (n.includes('microsoft')) s += 20;
-    if (n.includes('samantha'))  s += 15;
-    if (n.includes('aria'))      s += 18;
-    if (n.includes('jenny'))     s += 18;
-    return s;
-  };
-  _bestVoice = voices.filter(v => v.lang.startsWith('en')).sort((a,b) => score(b)-score(a))[0] || null;
-  return _bestVoice;
+// 再生に失敗した単語のセット（このセッション内でのキャッシュ。disabled判定の高速化用）
+const _missingAudioWords = new Set();
+
+function _markWordAudioMissing(word) {
+  const key = String(word).toLowerCase();
+  if (_missingAudioWords.has(key)) return;
+  _missingAudioWords.add(key);
+  // 画面上の該当ボタンがあれば即時disabledにする
+  document.querySelectorAll(`.tts-btn[data-word="${cssEscapeAttr(key)}"]`).forEach(btn => {
+    btn.disabled = true;
+    btn.classList.add('tts-btn-disabled');
+  });
 }
-if (window.speechSynthesis) {
-  speechSynthesis.getVoices();
-  speechSynthesis.onvoiceschanged = () => { _bestVoice = null; };
+
+/** data-word属性値として使うための簡易エスケープ（CSS.escapeが無い環境向け） */
+function cssEscapeAttr(s) {
+  if (window.CSS && window.CSS.escape) return window.CSS.escape(s);
+  return String(s).replace(/["\\]/g, '\\$&');
 }
-function _ttsSpeak(word, slow) {
-  if (!window.speechSynthesis) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(word);
-  const v = _getBestVoice();
-  if (v) u.voice = v;
-  u.lang = v ? v.lang : 'en-US';
-  u.rate = slow ? 0.65 : 0.88;
-  speechSynthesis.speak(u);
+
+function speak(e) {
+  if (e) e.stopPropagation();
+  const w = S.fcDeck[S.fcIndex % Math.max(S.fcDeck.length, 1)];
+  if (w) speakWord(w.w);
 }
-function speak(e, slow=false) {
-  e.stopPropagation();
-  const w = S.fcDeck[S.fcIndex];
-  if (w) speakWord(w.w, slow);
-}
-function quizSpeak(slow=false) {
+
+function quizSpeak() {
   const w = S.qSet[S.qIndex];
-  if (w) speakWord(w.w, slow);
+  if (w) speakWord(w.w);
 }
+
+/**
+ * 音声ボタンの初期状態を更新する。
+ * 既に再生失敗が判明している単語（_missingAudioWords）に対応するボタンは
+ * disabledにする。それ以外は有効化しておき、実際の再生失敗時に動的にdisabledへ切り替える
+ * （全単語分のファイル存在確認を事前に行うのは負荷が高いため、遅延検知方式を採用）。
+ */
+function updateSpeechAvailabilityUI() {
+  document.querySelectorAll('.tts-btn[data-word]').forEach(btn => {
+    const key = (btn.dataset.word || '').toLowerCase();
+    if (_missingAudioWords.has(key)) {
+      btn.disabled = true;
+      btn.classList.add('tts-btn-disabled');
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('tts-btn-disabled');
+    }
+  });
+}
+
+
 
 // ═══════ HEADER ═══════
 function updateHeader() {
@@ -6796,15 +7194,51 @@ function fcRender() {
   const idx = S.fcIndex % S.fcDeck.length;
   const w = S.fcDeck[idx];
 
+  // ───────────────────────────────────────────
+  // 重大バグ修正：カード切り替え時に次の単語の日本語面が
+  // 一瞬見えてしまう問題への対処。
+  //
+  // 原因：従来は「テキストを書き換える」→「flippedクラスを外す」の順だった。
+  // 「flippedクラスを外す」処理にCSSのtransitionがかかっているため、
+  // 外した直後の数フレームは回転アニメーション越しに新しい日本語面が見えてしまう。
+  //
+  // 対策：
+  //   1. まずtransitionを一時的に無効化する
+  //   2. flippedクラスを外し、英単語面（表）へ「アニメーションなしで瞬時に」戻す
+  //   3. ブラウザに強制的にレイアウトを再計算させる（reflow）→ ここで実際に表が向く
+  //   4. そのあとで初めてテキスト内容（単語・意味など）を書き換える
+  //   5. 最後にtransitionを再度有効化する（次回以降のタップ操作のflipは通常通りアニメーションする）
+  //
+  // この順序により「裏面が見えたまま中身だけ次の単語に変わる」フレームと
+  // 「アニメーション中に新しい中身がちらつく」フレームの両方が物理的に存在しなくなる。
+  // ───────────────────────────────────────────
+  const inner = document.getElementById('fc-inner');
+  if (inner) {
+    inner.style.transition = 'none';   // 1. アニメーション無効化
+    inner.classList.remove('flipped'); // 2. 即座に表面へ
+    void inner.offsetHeight;           // 3. 強制reflow（ここでブラウザが実際に再描画する）
+  }
+
+  // 4. ここから先でようやくテキストを書き換える（このときカードは既に表面で静止している）
   // 表示時に seen を記録
   updateLS(w.w, 'seen');
 
   document.getElementById('fc-word').textContent = w.w;
+  document.getElementById('fc-word').dataset.word = w.w.toLowerCase();
   document.getElementById('fc-phon').textContent = w.p;
   document.getElementById('fc-pos').textContent = w.pos + '詞';
   document.getElementById('fc-mean').textContent = w.m;
   document.getElementById('fc-mean2').textContent = w.m2;
   document.getElementById('fc-ex').textContent = w.ex;
+
+  // 音声ボタンを新しい単語に紐付け、既知の再生失敗単語ならdisabledにする
+  const fcTtsBtn = document.getElementById('fc-tts-btn');
+  if (fcTtsBtn) {
+    fcTtsBtn.dataset.word = w.w.toLowerCase();
+    const missing = _missingAudioWords.has(w.w.toLowerCase());
+    fcTtsBtn.disabled = missing;
+    fcTtsBtn.classList.toggle('tts-btn-disabled', missing);
+  }
 
   const badges = document.getElementById('fc-badges');
   badges.innerHTML = '';
@@ -6820,7 +7254,18 @@ function fcRender() {
   document.getElementById('fc-prog').style.width = `${(cur/total)*100}%`;
 
   S.fcFlipped = false;
-  document.getElementById('fc-inner').classList.remove('flipped');
+
+  // 評価ボタンの表示状態も表面用に同期しておく（fcFlipと同じ同期処理）
+  const frontBtns = document.getElementById('fc-btns-front');
+  const backBtns  = document.getElementById('fc-btns-back');
+  if (frontBtns) frontBtns.style.display = 'flex';
+  if (backBtns)  backBtns.style.display  = 'none';
+
+  // 5. transitionを再度有効化（次にユーザーがタップしてflipする際は通常通りアニメーションする）
+  if (inner) {
+    void inner.offsetHeight; // 念のためもう一度reflowを挟み、transition解除が反映されるのを保証
+    inner.style.transition = '';
+  }
 }
 
 function fcFlip() {
@@ -6833,7 +7278,7 @@ function fcFlip() {
   if (backBtns)  backBtns.style.display  = S.fcFlipped ? 'flex' : 'none';
   if (S.fcFlipped) {
     const w = S.fcDeck[S.fcIndex % S.fcDeck.length];
-    speakWord(w.w, false);
+    speakWord(w.w);
   }
 }
 
@@ -6984,7 +7429,11 @@ function initQuiz() {
   const base = getBase();
   const weak = base.filter(w => S.weak.has(w.w)).sort(() => Math.random()-0.5);
   const other = base.filter(w => !S.weak.has(w.w)).sort(() => Math.random()-0.5);
-  S.qSet = [...weak, ...other].slice(0, 20);
+  const merged = [...weak, ...other];
+  // Chapter/range学習は「そのChapterの単語は全て対象」を保証するため上限を外す。
+  // それ以外（all/weak/newなど範囲が大きいスコープ）は従来通り20問に制限。
+  const isChapterScoped = S.fcScope === 'chapter' || S.fcScope === 'range';
+  S.qSet = isChapterScoped ? merged : merged.slice(0, 20);
   S.qIndex = 0;
   S.qScore = 0;
   S.qAnswered = 0;
@@ -6997,12 +7446,22 @@ function renderQuiz() {
   const total = S.qSet.length;
 
   document.getElementById('q-word').textContent = w.w;
+  document.getElementById('q-word').dataset.word = w.w.toLowerCase();
   document.getElementById('q-phon').textContent = w.p;
   document.getElementById('q-cnt').textContent = `${S.qIndex+1} / ${total}`;
   document.getElementById('q-prog').style.width = `${(S.qIndex/total)*100}%`;
   document.getElementById('q-fb').textContent = '';
   document.getElementById('q-fb').style.background = 'none';
   document.getElementById('q-next').style.display = 'none';
+
+  // 音声ボタンを新しい単語に紐付け、既知の再生失敗単語ならdisabledにする
+  const qTtsBtn = document.getElementById('q-tts-btn');
+  if (qTtsBtn) {
+    qTtsBtn.dataset.word = w.w.toLowerCase();
+    const missing = _missingAudioWords.has(w.w.toLowerCase());
+    qTtsBtn.disabled = missing;
+    qTtsBtn.classList.toggle('tts-btn-disabled', missing);
+  }
 
   const wrong = WORDS.filter(x => x.w !== w.w).sort(() => Math.random()-0.5).slice(0,3);
   const opts = [...wrong.map(x => x.m), w.m].sort(() => Math.random()-0.5);
@@ -7078,7 +7537,11 @@ function initSpell() {
   const base = getBase();
   const weak = base.filter(w => S.weak.has(w.w)).sort(() => Math.random()-0.5);
   const other = base.filter(w => !S.weak.has(w.w)).sort(() => Math.random()-0.5);
-  S.spSet = [...weak, ...other].slice(0, 20);
+  const merged = [...weak, ...other];
+  // Chapter/range学習は「そのChapterの単語は全て対象」を保証するため上限を外す。
+  // それ以外（all/weak/newなど範囲が大きいスコープ）は従来通り20問に制限。
+  const isChapterScoped = S.fcScope === 'chapter' || S.fcScope === 'range';
+  S.spSet = isChapterScoped ? merged : merged.slice(0, 20);
   S.spIndex = 0;
   S.spScore = 0;
   S.spAnswered = 0;
@@ -7499,6 +7962,7 @@ document.addEventListener('DOMContentLoaded', function() {
   showPage('home', document.getElementById('nav-home'));
   updateHeader();
   updateAiProgress();
+  updateSpeechAvailabilityUI();
 
   // ── Service Worker 登録（PWA） ──
   if ('serviceWorker' in navigator) {
